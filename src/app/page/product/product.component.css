@@ -1,0 +1,36 @@
+.table thead.thead-primary {
+    background: #99b19c;
+}
+
+.table tbody td .img {
+    width: 100px;
+    height: 80px;
+}
+
+.img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.table tbody tr {
+    margin-bottom: 10px;
+}
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.table tbody td.quantity {
+    width: 10%;
+}
+tbody{
+    vertical-align: middle;
+}
+.paginationSet{
+    width: auto;
+    height: 75%;
+}

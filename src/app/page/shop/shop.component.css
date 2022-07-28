@@ -1,0 +1,117 @@
+.product__item {
+    margin-bottom: 35px;
+}
+
+.product__item__pic {
+    height: 360px;
+    position: relative;
+    overflow: hidden;
+}
+
+.set-bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+}
+
+.product__item__text {
+    text-align: center;
+    padding-top: 22px;
+}
+
+.product__item__pic .label.new {
+    background: #36a300;
+}
+
+.product__hover {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 30px;
+    text-align: center;
+}
+
+.product__hover li:nth-child(1) {
+    transition: all .4s ease .1s;
+}
+
+.product__hover li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+    top: 100px;
+    opacity: 0;
+}
+
+.product__hover li a {
+    font-size: 18px;
+    color: #111;
+    display: block;
+    height: 45px;
+    width: 45px;
+    background: #fff;
+    line-height: 48px;
+    text-align: center;
+    border-radius: 50%;
+    transition: all, .5s;
+}
+
+.product__hover li a span {
+    position: relative;
+    transform: rotate(0);
+    -webkit-transition: all, .3s;
+    transition: all, .3s;
+    display: inline-block;
+}
+
+.arrow_expand:before {
+    content: "\30";
+}
+
+.product__hover li a span {
+    position: relative;
+    transform: rotate(0);
+    transition: all, .3s;
+    display: inline-block;
+}
+
+.arrow_expand,
+.arrow_carrot-left,
+.arrow_carrot-right,
+.icon_close,
+.icon_search,
+.icon_adjust-horiz,
+.icon_bag_alt,
+.icon_tag_alt,
+.icon_loading,
+.icon_heart_alt {
+    font-family: 'ElegantIcons';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+.icon_heart_alt:before {
+    content: "\e030";
+}
+
+
+.product__item__pic .label {
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 500;
+    display: inline-block;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    }
+    .paginationSet{
+        width: auto;
+        height: 75%;
+    }

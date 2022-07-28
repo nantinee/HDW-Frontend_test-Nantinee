@@ -1,0 +1,244 @@
+<app-headerComponent></app-headerComponent>
+<div class="container mt-5">
+    <div class="row">
+        <!-- Left -->
+        <div class="col-lg-2 col-md-2">
+            <app-slidebar></app-slidebar>
+        </div>
+        <!-- right -->
+        <!-- ADD/EDIT -->
+        <div class="col-lg-8 col-md-8">
+            <!-- Add/Edit Form -->
+            <div *ngIf="!isList" class="text-center">
+                <form>
+                    <div class="col-12">
+                        <div class="card " style="width: 350px;height:250px;margin-left: 30%;">
+                            <img [src]="image" style="height: 250px;object-fit: contain;" class="w-100" />
+                        </div>
+                        <input type="file" [(ngModel)]="image" (change)="handleChangeImage($event)" name="imggg"
+                            class="my-2 object-fit" />
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <div class="form-outline">
+                                <label for="form6Example1">รหัสสินค้า</label>
+                                <input type="text" id="form6Example1" class="form-control" [(ngModel)]="serialCode"
+                                    name="serialCode" />
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <label for="form6Example2">ชื่อสินค้า</label>
+                                <input type="text" id="form6Example2" class="form-control" [(ngModel)]="name"
+                                    name="prod_name" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <div class="form-outline">
+                                <label for="form6Example3">ราคา</label>
+                                <input type="number" id="form6Example3" class="form-control" placeholder="0"
+                                    [(ngModel)]="price" name="price" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <label for="quatity">จำนวนสินค้า</label>
+                                <input type="number" class="form-control" placeholder="0" [(ngModel)]="qt"
+                                    name="quatity" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="size">ขนาด</label>
+                            <select selected name="size" class="form-control" [(ngModel)]="productSize"
+                                (change)="handleChange($event.target)">
+                                <option value="0">ไม่มีขนาด</option>
+                                <option value="ss">SS</option>
+                                <option value="s">S</option>
+                                <option value="m">M</option>
+                                <option value="l">L</option>
+                                <option value="xl">XL</option>
+                                <option value="xxl">XXL</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- Text input -->
+                    <div class="form-outline mb-2 text-left">
+                        <div class="col">
+                            <div class="form-outline mb-2">
+                                <label for="form6Example7">รายละเอียดสินค้า</label>
+                                <textarea class="form-control" id="form6Example7" rows="4" [(ngModel)]="detail"
+                                    name="detail"></textarea>
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check d-flex justify-content-center mb-2">
+                                <input class="form-check-input me-2" type="checkbox" id="form6Example8" name="bestsale"
+                                    [(ngModel)]="bestsale" (change)="handleChangeBestSaler($event.target)" />
+                                <label class="form-check-label" for="form6Example8"> สินค้าขายดี </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-2" (click)="checkEdit()">Save
+                        Product</button>
+                </form>
+            </div>
+            <!-- List Form -->
+            <div *ngIf="isList">
+                <div class="table-wrap">
+                    <!-- Search -->
+                    <div class="sidebar__categories mb-2">
+                        <div class="section-title">
+                            <h4>SEARCH</h4>
+                        </div>
+                        <div class="categories__accordion">
+                            <div>
+                                <div class="form-group">
+                                    <ng-template #rt let-r="result" let-t="term">
+                                        <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+                                      </ng-template>
+                                    <input type="text" name="search" id="search" class="form-control" [(ngModel)]="searchProduct"
+                                        placeholder="ค้นหาสินค้า" [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter" 
+                                        (ngModelChange)="searchText($event)" (keydown.enter)="onKeydown($event)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tablw -->
+                    <table class="table" *ngIf="collectionSize > 0">
+                        <thead class="thead-primary text-center">
+                            <tr>
+                                <th>
+                                    <button type="button" *ngIf="deleteList.length > 0" class="btn btn-danger mx-1"
+                                        data-dismiss="alert" (click)="deleteMultiProduct()" aria-label="Close">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                            <path
+                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                        </svg>
+                                    </button>
+                                </th>
+                                <th>&nbsp;</th>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Store</th>
+                                <th>total</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="alert text-center" role="alert"
+                                *ngFor="let item of dataClone | slice: (page-1) * pageSize : page * pageSize">
+                                <td>
+                                    <label class="checkbox-wrap checkbox-primary">
+                                        <input type="checkbox" (change)="collectListDelete(item,$event.target)">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="img" [ngStyle]="{'background-image': 'url(' +item.image+ ')'}">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="email text-left">
+                                        <p>ชื่อสินค้า : {{item.name}}</p>
+                                        <p>รายละเอียดสินค้า : {{item.detail}}</p>
+                                    </div>
+                                </td>
+                                <td>{{item.price?item.price:0}}</td>
+                                <td class="quantity">
+                                    <div class="input-group">
+                                        <input readonly type="text" name="quantity"
+                                            class="quantity form-control input-number"
+                                            [value]="item.quantity?item.quantity:0" min="1" max="100">
+                                    </div>
+                                </td>
+                                <td>{{item.price*item.quantity?item.price*item.quantity:0}}</td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-warning mx-1" data-dismiss="alert"
+                                            (click)="setEditProduct(item)" aria-label="Close">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                            </svg>
+                                        </button>
+                                        <button *ngIf="deleteList.length == 0" type="button" class="btn btn-danger mx-1"
+                                            data-dismiss="alert" (click)="deleteProduct(item)" aria-label="Close">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                                                <path
+                                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <!-- Unifind data of table -->
+                    <table class="table text-center" *ngIf="collectionSize == 0">
+                        <thead>
+                            <tr>No data input</tr>
+                        </thead>
+                    </table>
+                    <!-- pagination -->
+                    <div class="d-flex justify-content-between p-2" *ngIf="collectionSize > 0">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+                            [boundaryLinks]="true" [maxSize]="5">
+                        </ngb-pagination>
+
+                        <select class="form-select paginationSet" [(ngModel)]="pageSize"
+                            (ngModelChange)="refreshProduct()">
+                            <option [ngValue]="10">10 items per page</option>
+                            <option [ngValue]="20">20 items per page</option>
+                            <option [ngValue]="50">50 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- NAVIGATE  -->
+        <div class="col-2 text-center">
+            <div class="my-1">
+                <button [ngClass]="isList == false ? 'btn btn-primary' : 'btn btn-secondary'"
+                    (click)="handleChangeTable(false)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path
+                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="my-1">
+                <button [ngClass]="isList==true?'btn btn-primary':'btn btn-secondary'"
+                    (click)="handleChangeTable(true)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                        class="bi bi-card-list" viewBox="0 0 16 16">
+                        <path
+                            d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                        <path
+                            d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

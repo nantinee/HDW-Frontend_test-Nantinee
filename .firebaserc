@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "test-handywings-nantinee": {
+      "hosting": {
+        "handyWings": [
+          "test-handywings-nantinee"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "test-handywings-nantinee"
+  }
+}

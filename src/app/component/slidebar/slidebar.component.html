@@ -1,0 +1,33 @@
+<div>
+    <div class="shop__sidebar">
+        <div class="sidebar__filter">
+            <div class="section-title">
+                <h4>เมนู</h4>
+            </div>
+            <div class="filter-range-wrap">
+                <div class="range-slider">
+                    <div class="price-input">
+                        <ul class="sidebar-nav" style="margin-left:0;">
+                            <li><a href="">หน้าหลัก</a></li>
+                            <li *ngIf="login">
+                                <a [ngClass]="nowPath=='/shop'?'active':''" href="/shop">Shop</a>
+                            </li>
+                            <li *ngIf="login">
+                                <a [ngClass]="nowPath=='/all/product'?'active':''" href="/all/product">Edit
+                                    Product</a>
+                            </li>
+                            <li *ngIf="!login">
+                                <a href="login" [ngClass]="nowPath=='/login'?'active':''">Admin login</a>
+                            </li>
+                            <li *ngIf="login" (click)="clearStore()"><a href="#">Admin logout</a></li>
+
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<app-headerComponent></app-headerComponent>
+<div class="container mt-5">
+    <div class="row">
+        <!-- Left -->
+        <div class="col-lg-3 col-md-3">
+            <app-slidebar></app-slidebar>
+        </div>
+        <!-- right -->
+        <div class="col-lg-9 col-md-9">
+            <!-- Search -->
+            <div class="sidebar__categories">
+                <div class="section-title">
+                    <h4>SEARCH</h4>
+                </div>
+                <div class="categories__accordion">
+                    <div>
+                        <div class="form-group">
+                            <ng-template #rt let-r="result" let-t="term">
+                                <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+                              </ng-template>
+                            <input type="text" name="search" id="search" class="form-control" [(ngModel)]="searchProduct"
+                                placeholder="ค้นหาสินค้า" [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter" 
+                                (keydown.enter)="onKeydown($event)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- List Product -->
+            <div class="row mt-2">
+                <div class="col-lg-4 col-md-6 " *ngFor="let item of dataClone | slice: (page-1) * pageSize : page * pageSize">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg"  [ngStyle]="{'background-image': 'url(' +item.image+ ')'}">
+                            <div *ngIf="item.bestSaleler" class="label new">ขายดี</div>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">{{item.name}}</a></h6>
+                            <div class="product__price">ราคา : {{item.price}}</div>
+                            <small>ข้อมูลสินค้า: {{item.detail}}</small>
+                        </div>
+                    </div>
+                </div>
+                <!-- pagination -->
+                <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" >
+                    </ngb-pagination>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
